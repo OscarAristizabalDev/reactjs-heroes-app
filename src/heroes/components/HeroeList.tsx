@@ -1,23 +1,23 @@
 
 import { getHeroesByPublisher } from "../helpers";
-import { comic } from "../interfaces/interfaces"
+import { HeroeCard } from "./";
 
 interface heroeListProps {
     publisher: string
 }
 
 
-export const HeroeList = ({publisher}: heroeListProps) => {
+export const HeroeList = ({ publisher }: heroeListProps) => {
 
     const heroes = getHeroesByPublisher(publisher);
 
     return (
         <>
-            <ul>
+            <div className="row rows-cols-1 row-cols-md-3 g-3">
                 {heroes.map(heroe =>
-                    <li key={heroe.id}>{heroe.superhero}</li>
+                    <HeroeCard key={heroe.id} heroe={heroe} />
                 )}
-            </ul>
+            </div>
         </>
     )
 }
