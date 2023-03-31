@@ -1,6 +1,17 @@
-import { Link, NavLink } from "react-router-dom"
+import { Link, NavLink, useNavigate } from "react-router-dom"
 
 export const Navbar = () => {
+
+    // useNavigate es un custom hook creado por react-router-dom para ayudarnos con la navegacion
+    const navigate = useNavigate();
+
+    const onLoggout = () => {
+        // al cerrar sesión se navega al login
+        navigate('/login', {
+            replace: true
+        });
+    }
+
     return (
         <nav className="navbar navbar-expand-sm navbar-dark bg-dark p-2">
 
@@ -13,7 +24,7 @@ export const Navbar = () => {
 
             <div className="navbar-collapse">
                 <div className="navbar-nav">
-                    
+
                     {/* mediante el isActive se agrega la clase cuando se selecciona el link actual */}
                     <NavLink
                         className={({ isActive }) => `nav-item nav-link ${isActive ? 'active' : ''}`}
@@ -37,7 +48,10 @@ export const Navbar = () => {
                         Oscar
                     </span>
 
-                    <button className="nav-item nav-link btn">
+                    <button
+                        className="nav-item nav-link btn"
+                        onClick={onLoggout}
+                    >
                         Logout
                     </button>
                 </ul>
