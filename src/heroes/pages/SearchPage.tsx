@@ -16,12 +16,13 @@ export const SearchPage = () => {
     const { q = '' } = queryString.parse(location.search);
     // el hook useMemo permite memorizar los valores, entonces la constante hereos solo va a cambiar cuando
     // el useMemo identifique que el publisher cambio, lo que quiere decir, que el useMemo es una función que memoriza un valor
-    // la cual tiene una función callback que solo va a llamar el getHeroesByPublisher 
+    // la cual tiene una función callback que solo va a llamar el getHeroesByPublisher
     // cuando el publisher que viene por la URL cambie.
     // el valor del retorno del callback es lo que retorna la función getHeroesByPublisher
     const heroes = useMemo(() => getHeroeByName(q as string), [q]);
 
-    console.log(heroes)
+    const showSearch = (q?.length === 0);
+    const showError = (q?.length as number > 0) && heroes.length === 0;
 
     const { onCambiarInput, searchText }: any = useForm({
         searchText: q
@@ -30,7 +31,7 @@ export const SearchPage = () => {
     const onSearchSubmit = (event: SyntheticEvent) => {
         event.preventDefault(); // evita la propagación del formulario
 
-        if (searchText.trim().length <= 1) return;
+        //if (searchText.trim().length <= 0) return;
 
         navigate(`?q=${searchText}`);
     }
@@ -65,13 +66,24 @@ export const SearchPage = () => {
                     <h1>Results</h1>
                     <hr />
 
-                    <div className="alert alert-primary">
+                    {/* Esto es una manera de hacer mediante el condicional ternario */}
+                    {/* {
+                        (q === '')
+                            ? <div className="alert alert-primary">Search a hero</div>
+                            : (heroes.length <= 0)
+                            && <div className="alert alert-danger">There's no results to <b>{q}</b></div>
+                    } */}
+
+                    <div className="alert alert-primary animate__animated animate__bounce"
+                        style={{ display: showSearch ? '' : 'none' }}>
                         Search a hero
                     </div>
 
-                    <div className="alert alert-danger">
+                    <div className="alert alert-danger animate__animated animate__bounce"
+                        style={{ display: showError ? '' : 'none' }}>
                         There's no results to <b>{q}</b>
                     </div>
+
 
                     {
                         heroes.map(heroe =>
