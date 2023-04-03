@@ -1,9 +1,10 @@
-import { FormEvent, FormEventHandler, SyntheticEvent } from "react";
+import { FormEvent, FormEventHandler, SyntheticEvent, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import queryString from 'query-string';
 
 import { HeroeCard } from "../components";
 import { useForm } from "../hooks/useForm";
+import { getHeroeByName } from "../helpers";
 
 export const SearchPage = () => {
 
@@ -13,12 +14,20 @@ export const SearchPage = () => {
     // location.search contiene todos lo queryParams enviados por la URL
     // Se obtiene la q del queryParam, y si no viene será igual a ''
     const { q = '' } = queryString.parse(location.search);
+    // el hook useMemo permite memorizar los valores, entonces la constante hereos solo va a cambiar cuando
+    // el useMemo identifique que el publisher cambio, lo que quiere decir, que el useMemo es una función que memoriza un valor
+    // la cual tiene una función callback que solo va a llamar el getHeroesByPublisher 
+    // cuando el publisher que viene por la URL cambie.
+    // el valor del retorno del callback es lo que retorna la función getHeroesByPublisher
+    const heroes = useMemo(() => getHeroeByName(q as string), [q]);
+
+    console.log(heroes)
 
     const { onCambiarInput, searchText }: any = useForm({
-        searchText: ''
+        searchText: q
     });
 
-    const onSearchHeroe = (event: SyntheticEvent) => {
+    const onSearchSubmit = (event: SyntheticEvent) => {
         event.preventDefault(); // evita la propagación del formulario
 
         if (searchText.trim().length <= 1) return;
@@ -35,7 +44,7 @@ export const SearchPage = () => {
                 <div className="col-5">
                     <h1>Searching</h1>
                     <hr />
-                    <form onSubmit={onSearchHeroe}>
+                    <form onSubmit={onSearchSubmit}>
                         <input
                             type="text"
                             placeholder="Search a Heroe"
@@ -64,7 +73,11 @@ export const SearchPage = () => {
                         There's no results to <b>{q}</b>
                     </div>
 
-                    {/* <HeroeCard heroe={}></HeroeCard> */}
+                    {
+                        heroes.map(heroe =>
+                            <HeroeCard key={heroe.id} heroe={heroe} />
+                        )
+                    }
                 </div>
             </div>
         </>
