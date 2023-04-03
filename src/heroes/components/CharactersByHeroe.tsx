@@ -6,6 +6,7 @@ interface CharacterByHereoProps {
 }
 
 export const CharactersByHeroe = ({ alterEgo, characters }: CharacterByHereoProps) => {
-    if (alterEgo === characters) return (<></>);
-    return (<p>{characters}</p>);
+    // if (alterEgo === characters) return (<></>);
+    // return (<p>{characters}</p>);
+    return (alterEgo === characters) ? (<></>) : (<p>{characters}</p>);
 }
