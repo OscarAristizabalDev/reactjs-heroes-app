@@ -28,7 +28,7 @@ export const HeroPage = () => {
                 <img
                     src={`/assets/heroes/${id}.jpg`}
                     alt={heroe.superhero}
-                    className="img-thumbnail"
+                    className="img-thumbnail animate__animated animate__fadeInLeft"
                 />
             </div>
 
