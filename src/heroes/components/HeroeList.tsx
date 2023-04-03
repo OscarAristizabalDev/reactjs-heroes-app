@@ -1,4 +1,5 @@
 
+import { useMemo } from "react";
 import { getHeroesByPublisher } from "../helpers";
 import { HeroeCard } from "./";
 
@@ -8,8 +9,12 @@ interface heroeListProps {
 
 
 export const HeroeList = ({ publisher }: heroeListProps) => {
-
-    const heroes = getHeroesByPublisher(publisher);
+    // el hook useMemo permite memorizar los valores, entonces la constante hereos solo va a cambiar cuando
+    // el useMemo identifique que el publisher cambio, lo que quiere decir, que el useMemo es una función que memoriza un valor
+    // la cual tiene una función callback que solo va a llamar el getHeroesByPublisher 
+    // cuando el publisher que viene por la URL cambie.
+    // el valor del retorno del callback es lo que retorna la función getHeroesByPublisher
+    const heroes = useMemo(() => getHeroesByPublisher(publisher), [publisher]);
 
     return (
         <>

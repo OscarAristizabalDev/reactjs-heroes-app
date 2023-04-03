@@ -1,11 +1,16 @@
 import { Navigate, useNavigate, useParams } from "react-router-dom"
 import { getHeroeById } from "../helpers";
+import { useMemo } from "react";
 
 export const HeroPage = () => {
 
     // Custom hook de react router dom que no sirve para obtener los parametros por URL
     const { id } = useParams();
-    const heroe = getHeroeById(id as string);
+    // el hook useMemo permite memorizar los valores, entonces la constante hereo solo va a cambiar cuando
+    // el useMemo identifique que el id cambio, lo que quiere decir, que el useMemo es una función que memoriza un valor
+    // la cual tiene una función callback que solo va a llamar el getHeroeById cuando el id que viene por la URL cambie.
+    // el valor del retorno del callback es lo que retorna la función getHeroeById
+    const heroe = useMemo(() => getHeroeById(id as string), [id]);
     const navigate = useNavigate();
 
     const onNavigateBack = () => {
