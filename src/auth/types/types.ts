@@ -6,5 +6,6 @@ export type AuthAction =
 
 export type AuthContextProps = {
     authState: AuthState,
-    login: (name: string) => void
+    login: (name: string) => void,
+    logout: () => void
 }

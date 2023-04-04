@@ -5,13 +5,15 @@ import { useAuth } from "../../auth";
 export const Navbar = () => {
 
     // Accedemos al context
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
     const { name } = user;
 
     // useNavigate es un custom hook creado por react-router-dom para ayudarnos con la navegacion
     const navigate = useNavigate();
 
     const onLoggout = () => {
+
+        logout();
         // al cerrar sesión se navega al login
         navigate('/login', {
             replace: true
