@@ -7,13 +7,13 @@ export const authReducer = (state: AuthState, action: AuthAction): AuthState => 
         case 'login':
             return {
                 ...state, // Esto permite mantener los demas variables del state
-                auth: action.payload
+                user: action.payload
             }
 
         case 'logout':
             return {
                 ...state,
-                auth: action.payload
+                user: action.payload
             }
         default:
             return state;

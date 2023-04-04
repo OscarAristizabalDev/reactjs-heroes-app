@@ -1,6 +1,14 @@
+import { useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom"
 
+import { AuthContext } from "../../auth";
+
 export const Navbar = () => {
+
+    // Accedemos al context
+    const { authState } = useContext(AuthContext);
+    const { user } = authState;
+    const { name } = user;
 
     // useNavigate es un custom hook creado por react-router-dom para ayudarnos con la navegacion
     const navigate = useNavigate();
@@ -39,7 +47,7 @@ export const Navbar = () => {
                     >
                         DC
                     </NavLink>
-                    
+
                     <NavLink
                         className={({ isActive }) => `nav-item nav-link ${isActive ? 'active' : ''}`}
                         to="/search"
@@ -52,7 +60,7 @@ export const Navbar = () => {
             <div className="navbar-collapse collapse w-100 order-3 dual-collapse2 d-flex justify-content-end">
                 <ul className="navbar-nav ml-auto">
                     <span className="nav-item nav-link text-primary">
-                        Oscar
+                        {name}
                     </span>
 
                     <button

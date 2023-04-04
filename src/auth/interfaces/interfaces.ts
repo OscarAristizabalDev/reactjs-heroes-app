@@ -1,9 +1,10 @@
 
-export interface Auth {
+export interface User {
+    id: string
+    name: string,
     logged: boolean,
-    name: string
 }
 
 export interface AuthState {
-    auth: Auth
+    user: User
 }
