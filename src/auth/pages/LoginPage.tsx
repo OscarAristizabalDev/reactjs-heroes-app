@@ -1,14 +1,14 @@
-import { useContext } from "react";
 import { useNavigate } from "react-router-dom"
-import { AuthContext } from "../context";
+
+import { useAuth } from "../hooks";
 
 export const LoginPage = () => {
 
     // useNavigate es un custom hook creado por react-router-dom para ayudarnos con la navegacion
     const navigate = useNavigate();
 
-    // Mediante el useContext podemos acceder al contexto actual con la información que comparte
-    const { login } = useContext(AuthContext);
+    // Mediante el custom hook useAuth puedo acceder al useContext
+    const { login } = useAuth();
 
     const onLogin = () => {
 

@@ -1,13 +1,11 @@
-import { useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom"
 
-import { AuthContext } from "../../auth";
+import { useAuth } from "../../auth";
 
 export const Navbar = () => {
 
     // Accedemos al context
-    const { authState } = useContext(AuthContext);
-    const { user } = authState;
+    const { user } = useAuth();
     const { name } = user;
 
     // useNavigate es un custom hook creado por react-router-dom para ayudarnos con la navegacion
