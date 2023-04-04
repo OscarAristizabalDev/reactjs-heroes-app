@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 import { AuthContext } from "./AuthContext";
 import { authReducer } from "./authReducer";
-import { AuthState } from "../interfaces/interfaces";
+import { AuthState, User } from "../interfaces/interfaces";
 import { AuthAction } from "../types/types";
 
 interface AuthProviderProps {
@@ -17,10 +17,24 @@ const initialState: AuthState = {
     }
 }
 
+const initialize = (): AuthState => {
+    let userValueStorage = localStorage.getItem('user');
+    const user: User = (userValueStorage !== null) && JSON.parse(userValueStorage);
+
+    return {
+        user: {
+            id: user.id,
+            name: user.name,
+            logged: user.logged
+        }
+    }
+
+}
+
 export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     // se utiliza el hook useReducer para el manejo del estado en la autenticación
-    const [authState, dispatch] = useReducer(authReducer, initialState);
+    const [authState, dispatch] = useReducer(authReducer, {}, initialize);
 
     // Esta función será compartida a todos los componentes mediante el provider
     // Al ser compartido, todos los demas componentes podrán hacer uso de la función
@@ -33,6 +47,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                 logged: true,
             }
         }
+
+        localStorage.setItem('user', JSON.stringify(action.payload));
+
         dispatch(action);
     }
 
