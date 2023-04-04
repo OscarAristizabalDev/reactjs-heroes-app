@@ -12,9 +12,14 @@ export const LoginPage = () => {
 
     const onLogin = () => {
 
+        // En caso de ser nulo se envía a '/'
+        const lastPage = localStorage.getItem('lastPath') || '/';
+
+        console.log(lastPage)
+
         login('Oscar Aristizabal');
 
-        navigate('/', {
+        navigate(lastPage, {
             replace: true
         })
     }
